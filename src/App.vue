@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <h4 class="bg-primary text-white text-center p-2">
-      Lista zadań użytkownika {{name}}
-    </h4>  
+    <h4 class="bg-primary text-white text-center p-2">Lista zadań użytkownika {{name}}</h4>
     <div class="container-fluid p-4">
       <div class="row">
         <div class="col font-weight-bold">Zadanie</div>
@@ -12,7 +10,7 @@
         <div class="col">{{t.action}}</div>
         <div class="col-2 text-center">
           <input type="checkbox" v-model="t.done" class="form-check-input" />
-        </div>  
+        </div>
       </div>
       <div class="row py-2">
         <div class="col">
@@ -21,51 +19,50 @@
         <div class="col">
           <button class="btn-primary" v-on:click="addNewTodo">Dodaj</button>
         </div>
-      </div>  
+      </div>
       <div class="row bg-secondary py-2 mt-2 text-white">
-        <div class="col text-cnter">
-          <input type="checkbox" v-model="hideCompleted" class="form-check-inpu" />
-          <label class="form-check-label font-weight-bold">
-            Ukryj zakończone zadania
-          </label>
+        <div class="col text-center">
+          <input type="checkbox" v-model="hideCompleted" class="form-check-input" />
+          <label class="form-check-label font-weight-bold">Ukryj zakończone zadania</label>
         </div>
-      </div>      
-    </div>    
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'app',
+  name: "app",
   data() {
     return {
       name: "Tomek",
-      tasks:[{action: "Kup kwiaty", done: false},
-            {action: "Zrób zakupy", done: true},
-            {action: "Wynieś Smieci", done: false},
-            {action: "Posprzątaj pokój", done: true}],
+      tasks: [],
       hideCompleted: true,
-      newItemText: "",
+      newItemText: ""
+    };
+  },
+  computed: {
+    filteredTasks() {
+      return this.hideCompleted ? this.tasks.filter(t => !t.done) : this.tasks;
     }
   },
- computed: {
-            filteredTasks() {
-                return this.hideCompleted ?
-                    this.tasks.filter(t => !t.done) : this.tasks
-             } 
-        },
   methods: {
-    addNewTodo(){
+    addNewTodo() {
       this.tasks.push({
         action: this.newItemText,
         done: false
       });
+      localStorage.setItem("todos", JSON.stringify(this.tasks));
       this.newItemText = "";
     }
-  }      
-}
+  },
+  created() {
+    let data = localStorage.getItem("todos");
+    if (data != null) {
+      this.tasks = JSON.parse(data);
+    }
+  }
+};
 </script>
 
 
