@@ -14,6 +14,14 @@
           <input type="checkbox" v-model="t.done" class="form-check-input" />
         </div>  
       </div>
+      <div class="row py-2">
+        <div class="col">
+          <input v-model="newItemText" class="form-control" />
+        </div>
+        <div class="col">
+          <button class="btn-primary" v-on:click="addNewTodo">Dodaj</button>
+        </div>
+      </div>  
       <div class="row bg-secondary py-2 mt-2 text-white">
         <div class="col text-cnter">
           <input type="checkbox" v-model="hideCompleted" class="form-check-inpu" />
@@ -39,6 +47,7 @@ export default {
             {action: "Wynieś Smieci", done: false},
             {action: "Posprzątaj pokój", done: true}],
       hideCompleted: true,
+      newItemText: "",
     }
   },
  computed: {
@@ -47,6 +56,15 @@ export default {
                     this.tasks.filter(t => !t.done) : this.tasks
              } 
         },
+  methods: {
+    addNewTodo(){
+      this.tasks.push({
+        action: this.newItemText,
+        done: false
+      });
+      this.newItemText = "";
+    }
+  }      
 }
 </script>
 
