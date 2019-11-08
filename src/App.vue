@@ -2,7 +2,7 @@
   <div class="main">
     <div id="app">
       <h4 class="bg-primary text-white text-center p-2">Lista zadań użytkownika {{name}}</h4>
-      <div class="container-fluid p-4">
+      <div class="container-fluid">
         <div class="row" v-if="filteredTasks.lenght == 0">
           <div class="col text-center">
             <b>Nie masz nic do zrobienia</b>
